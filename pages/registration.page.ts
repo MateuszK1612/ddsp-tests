@@ -1,4 +1,5 @@
 import { Page } from "@playwright/test";
+import { registrationData } from "../test-data/registration.data";
 
 export class RegistrationPage {
   constructor(private page: Page) {}
@@ -27,4 +28,20 @@ export class RegistrationPage {
   registerButton = this.page.locator("#register-button");
 
   registrationSuccessPopup = this.page.locator('#registration-success-popup')
+
+  successMessage = "User created correctly and verification message sent. Please complete your registration by using the link in the verification email you sent"
+
+  async register(registrationData: registrationData): Promise<void> {
+    await this.usernameInput.fill(registrationData.userLogin);
+    await this.emailInput.fill(registrationData.userEmail);
+    await this.confirmEmailInput.fill(registrationData.userEmail);
+    await this.passwordInput.fill(registrationData.userPassword);
+    await this.confirmPasswordInput.fill(registrationData.userPassword);
+    await this.firstNameInput.fill(registrationData.userFirstName);
+    await this.lastNameInput.fill(registrationData.userLastName);
+    await this.acceptTermsCheckbox.click();
+    await this.registerButton.click();
+  }
+
+
 }
