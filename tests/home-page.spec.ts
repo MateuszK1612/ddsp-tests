@@ -6,7 +6,6 @@ test.describe("Home Page tests", () => {
 
   test.beforeEach(async ({ page }) => {
     homePage = new HomePage(page);
-    console.log(page);
     await page.goto("/");
     await homePage.cookiesAcceptButton.click();
   });
@@ -17,7 +16,6 @@ test.describe("Home Page tests", () => {
     // Act
 
     // Assert
-
     await expect(homePage.loginButton).toBeVisible;
   });
 });
