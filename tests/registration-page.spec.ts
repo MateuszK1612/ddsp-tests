@@ -1,9 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { HomePage } from "../pages/home.page";
 import { RegistrationPage } from "../pages/registration.page";
-import {
-  registrationData,
-} from "../test-data/registration.data";
+import { registrationData } from "../test-data/registration.data";
 import { faker } from "@faker-js/faker";
 
 test.describe("Registration page tests", () => {
@@ -20,9 +18,7 @@ test.describe("Registration page tests", () => {
 
   test("Succesful registration", async ({ page }) => {
     // Arrange
-
-    
-const registrationData: registrationData = {
+    const registrationData: registrationData = {
       userLogin: faker.person.firstName(),
       userEmail: faker.internet.email(),
       userPassword: faker.internet.password({ length: 12, prefix: "Te1!" }),
@@ -31,12 +27,34 @@ const registrationData: registrationData = {
     };
 
     // Act
-
     await registrationPage.register(registrationData);
 
     // Assert
     await expect(registrationPage.registrationSuccessPopup).toContainText(
       registrationPage.successMessage
     );
+
+   
+    });
+
+    test("Unsuccessful registration with wrong user login", async ({
+        page,
+      }) => {
+        // Arrange
+        const registrationData: registrationData = {
+          userLogin: "Test!@#",
+          userEmail: faker.internet.email(),
+          userPassword: faker.internet.password({ length: 12, prefix: "Te1!" }),
+          userFirstName: faker.person.firstName(),
+          userLastName: faker.person.lastName(),
+        };
+  
+        // Act
+        await registrationPage.register(registrationData);
+  
+        // Assert
+        await expect(registrationPage.wrongLoginError).toHaveText(
+          registrationPage.wrongLoginMessage
+        );
   });
 });
