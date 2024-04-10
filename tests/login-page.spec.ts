@@ -23,6 +23,18 @@ test.describe("Login page tests", () => {
     // Act
     await loginPage.login(loginData);
     // Assert
-    await expect (loginPage.userLoggedMenu).toHaveText(loginData.login)
+    await expect(loginPage.userLoggedMenu).toHaveText(loginData.login);
+  });
+
+  test("Uncuccesful login with incorrect username", async ({ page }) => {
+    // Arrange
+    const loginData: LoginData = loginPage.getLoginData();
+    loginData.login = "xyz";
+    // Act
+    await loginPage.login(loginData);
+    
+
+    // Assert
+    await expect(homePage.loginButton).toHaveText("Login");
   });
 });
