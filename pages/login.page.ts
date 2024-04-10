@@ -17,8 +17,9 @@ export class LoginPage {
 
   getLoginData(): LoginData {
     return {
-        login: "TestAdmin1",
-        password: "Tester123!",
-      }
+      login: "TestAdmin1",
+      password: "Tester123!",
+    };
+    //Just for purpose of training and this tests login and password are not hidden
   }
 }
