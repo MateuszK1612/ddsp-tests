@@ -1,4 +1,4 @@
-import { Page } from "@playwright/test";
+import { expect, Page } from "@playwright/test";
 import { RegistrationData } from "../test-data/registration.data";
 import { faker } from "@faker-js/faker";
 
@@ -36,6 +36,24 @@ export class RegistrationPage {
   wrongEmailError = this.page.locator("#email-error-format");
   wrongEmailMessage = "Incorrect E-mail";
 
+  notmatchingEmailError = this.page.locator("#confirm-email-error-must-match");
+  notmatchingEmailMessage = "E-mails are different. They should be equal!";
+
+  tooshortPasswordError = this.page.locator("#password-error-minlength");
+  tooshortPasswordMessage = "Password with less than 8 characters";
+
+  wrongPasswordError = this.page.locator("#password-error-pattern");
+  wrongPasswordMessage =
+    " The password must consist of at least one number, contain lowercase and uppercase letters and special characters (e.g. #,?,!) ";
+
+  notMatchingPasswordError = this.page.locator(
+    "#confirm-password-error-must-match"
+  );
+  notMatchingPasswordMessage = "Passwords are different. They should be equal!";
+
+  uncheckedTermsBox = this.page.locator("#accept-terms-error-required");
+  uncheckedTermsBoxError = "You have to accept the terms and conditions";
+
   successMessage =
     "User created correctly and verification message sent. Please complete your registration by using the link in the verification email you sent";
 
@@ -45,13 +63,15 @@ export class RegistrationPage {
   ): Promise<void> {
     await this.usernameInput.fill(registrationData.login);
     await this.emailInput.fill(registrationData.email);
-    await this.confirmEmailInput.fill(registrationData.email);
+    await this.confirmEmailInput.fill(registrationData.confirmEmail);
     await this.passwordInput.fill(registrationData.password);
-    await this.confirmPasswordInput.fill(registrationData.password);
+    await this.confirmPasswordInput.fill(registrationData.confirmPassword);
     await this.firstNameInput.fill(registrationData.firstName);
     await this.lastNameInput.fill(registrationData.lastName);
     if (skipcheckbox === false) {
       await this.acceptTermsCheckbox.click();
+      await expect(this.uncheckedTermsBox).toBeVisible
+      
     }
     await this.registerButton.click();
   }
