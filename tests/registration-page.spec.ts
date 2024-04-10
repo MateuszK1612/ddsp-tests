@@ -1,8 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { HomePage } from "../pages/home.page";
 import { RegistrationPage } from "../pages/registration.page";
-import { registrationData } from "../test-data/registration.data";
-import { faker } from "@faker-js/faker";
+import { RegistrationData } from "../test-data/registration.data";
 
 test.describe("Registration page tests", () => {
   let homePage: HomePage;
@@ -18,14 +17,7 @@ test.describe("Registration page tests", () => {
 
   test("Succesful registration", async ({ page }) => {
     // Arrange
-    const registrationData: registrationData = {
-      userLogin: faker.person.firstName(),
-      userEmail: faker.internet.email(),
-      userPassword: faker.internet.password({ length: 12, prefix: "Te1!" }),
-      userFirstName: faker.person.firstName(),
-      userLastName: faker.person.lastName(),
-    };
-
+    const registrationData: RegistrationData = registrationPage.getData(); 
     // Act
     await registrationPage.register(registrationData);
 
@@ -33,28 +25,37 @@ test.describe("Registration page tests", () => {
     await expect(registrationPage.registrationSuccessPopup).toContainText(
       registrationPage.successMessage
     );
+  });
 
-   
-    });
+  test("Unsuccessful registration with incorrect user login", async ({
+    page,
+  }) => {
+    // Arrange
+    const registrationData: RegistrationData = registrationPage.getData();
+    registrationData.login = "#@$" 
 
-    test("Unsuccessful registration with wrong user login", async ({
-        page,
-      }) => {
-        // Arrange
-        const registrationData: registrationData = {
-          userLogin: "Test!@#",
-          userEmail: faker.internet.email(),
-          userPassword: faker.internet.password({ length: 12, prefix: "Te1!" }),
-          userFirstName: faker.person.firstName(),
-          userLastName: faker.person.lastName(),
-        };
-  
-        // Act
-        await registrationPage.register(registrationData);
-  
-        // Assert
-        await expect(registrationPage.wrongLoginError).toHaveText(
-          registrationPage.wrongLoginMessage
-        );
+    // Act
+    await registrationPage.register(registrationData);
+
+    // Assert
+    await expect(registrationPage.wrongLoginError).toHaveText(
+      registrationPage.wrongLoginMessage
+    );
+  });
+
+  test("Unsuccessful registration with incorrect user email", async ({
+    page,
+  }) => {
+    // Arrange
+    const registrationData: RegistrationData = registrationPage.getData();
+    registrationData.email = "test@test@test.pl"
+
+    // Act
+    await registrationPage.register(registrationData);
+
+    // Assert
+    await expect(registrationPage.wrongEmailError).toHaveText(
+      registrationPage.wrongEmailMessage
+    );
   });
 });

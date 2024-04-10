@@ -1,8 +1,9 @@
-
-export interface registrationData {
-    userLogin: string,
-    userEmail: string,
-    userPassword: string,
-    userFirstName: string,
-    userLastName: string,
-  };
+export interface RegistrationData {
+  login: string;
+  email: string;
+  confirmEmail: string;
+  password: string;
+  confirmPassword: string;
+  firstName: string;
+  lastName: string;
+}

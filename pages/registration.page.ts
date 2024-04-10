@@ -1,5 +1,6 @@
 import { Page } from "@playwright/test";
-import { registrationData } from "../test-data/registration.data";
+import { RegistrationData } from "../test-data/registration.data";
+import { faker } from "@faker-js/faker";
 
 export class RegistrationPage {
   constructor(private page: Page) {}
@@ -27,26 +28,47 @@ export class RegistrationPage {
   );
   registerButton = this.page.locator("#register-button");
 
-  registrationSuccessPopup = this.page.locator('#registration-success-popup')
+  registrationSuccessPopup = this.page.locator("#registration-success-popup");
 
-  wrongLoginError = this.page.locator('#username-error-pattern')
-  wrongLoginMessage = "The field cannot contain special characters"
+  wrongLoginError = this.page.locator("#username-error-pattern");
+  wrongLoginMessage = "The field cannot contain special characters";
 
-  successMessage = "User created correctly and verification message sent. Please complete your registration by using the link in the verification email you sent"
+  wrongEmailError = this.page.locator("#email-error-format");
+  wrongEmailMessage = "Incorrect E-mail";
 
-  async register(registrationData: registrationData, skipcheckbox: boolean = false): Promise<void> {
-    await this.usernameInput.fill(registrationData.userLogin);
-    await this.emailInput.fill(registrationData.userEmail);
-    await this.confirmEmailInput.fill(registrationData.userEmail);
-    await this.passwordInput.fill(registrationData.userPassword);
-    await this.confirmPasswordInput.fill(registrationData.userPassword);
-    await this.firstNameInput.fill(registrationData.userFirstName);
-    await this.lastNameInput.fill(registrationData.userLastName);
+  successMessage =
+    "User created correctly and verification message sent. Please complete your registration by using the link in the verification email you sent";
+
+  async register(
+    registrationData: RegistrationData,
+    skipcheckbox: boolean = false
+  ): Promise<void> {
+    await this.usernameInput.fill(registrationData.login);
+    await this.emailInput.fill(registrationData.email);
+    await this.confirmEmailInput.fill(registrationData.email);
+    await this.passwordInput.fill(registrationData.password);
+    await this.confirmPasswordInput.fill(registrationData.password);
+    await this.firstNameInput.fill(registrationData.firstName);
+    await this.lastNameInput.fill(registrationData.lastName);
     if (skipcheckbox === false) {
-    await this.acceptTermsCheckbox.click();
+      await this.acceptTermsCheckbox.click();
     }
     await this.registerButton.click();
   }
 
+  getData(): RegistrationData {
+    const password = faker.internet.password({ length: 12, prefix: "Te1!" });
+    const email = faker.internet.email();
+    const registrationData: RegistrationData = {
+      login: faker.person.firstName(),
+      email: email,
+      confirmEmail: email,
+      password: password,
+      confirmPassword: password,
+      firstName: faker.person.firstName(),
+      lastName: faker.person.lastName(),
+    };
 
+    return registrationData;
+  }
 }
