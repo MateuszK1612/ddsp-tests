@@ -32,7 +32,29 @@ test.describe("Login page tests", () => {
     loginData.login = "xyz";
     // Act
     await loginPage.login(loginData);
-    
+
+    // Assert
+    await expect(homePage.loginButton).toHaveText("Login");
+  });
+
+  test("Uncuccesful login with too short password", async ({ page }) => {
+    // Arrange
+    const loginData: LoginData = loginPage.getLoginData();
+    loginData.password = "xyz";
+    // Act
+    await loginPage.login(loginData);
+
+    // Assert
+    await expect(loginPage.tooShortPassword).toHaveText(
+      loginPage.tooShortPasswordError
+    );
+  });
+  test("Uncuccesful login with incorrect password", async ({ page }) => {
+    // Arrange
+    const loginData: LoginData = loginPage.getLoginData();
+    loginData.password = "xyz12345!";
+    // Act
+    await loginPage.login(loginData);
 
     // Assert
     await expect(homePage.loginButton).toHaveText("Login");

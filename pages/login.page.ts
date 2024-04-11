@@ -8,6 +8,12 @@ export class LoginPage {
   passwordInput = this.page.locator("#password-input");
   loginButton = this.page.locator("#sign-in-btn");
   userLoggedMenu = this.page.locator("#user-logged-menu");
+  administratorPanel = this.page.getByRole("link", {
+    name: "Administrator panel",
+  });
+
+  tooShortPassword = this.page.locator("#password-error-minlength")
+  tooShortPasswordError = "The value entered is too short"
 
   async login(loginData: LoginData): Promise<void> {
     await this.loginInput.fill(loginData.login);
@@ -17,8 +23,8 @@ export class LoginPage {
 
   getLoginData(): LoginData {
     return {
-      login: "TestAdmin1",
-      password: "Tester123!",
+      login: "Dymek",
+      password: "Damian13!",
     };
     //Just for purpose of training and this tests login and password are not hidden
   }
