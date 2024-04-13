@@ -2,17 +2,20 @@ import { test, expect } from "@playwright/test";
 import { HomePage } from "../pages/home.page";
 import { RegistrationPage } from "../pages/registration.page";
 import { RegistrationData } from "../test-data/registration.data";
+import { Header } from "../components/header.component";
 
 test.describe("Registration page tests", () => {
   let homePage: HomePage;
   let registrationPage: RegistrationPage;
+  let header: Header;
 
   test.beforeEach(async ({ page }) => {
     homePage = new HomePage(page);
     registrationPage = new RegistrationPage(page);
+    header = new Header(page);
     await page.goto("/");
     await homePage.cookiesAcceptButton.click();
-    await homePage.registerButton.click();
+    await header.registerButton.click();
   });
 
   test("Succesful registration", async ({ page }) => {

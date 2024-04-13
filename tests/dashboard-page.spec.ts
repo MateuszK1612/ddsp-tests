@@ -4,12 +4,14 @@ import { LoginPage } from "../pages/login.page";
 import { DashboardPage } from "../pages/dashboard.page";
 import { LoginData } from "../test-data/login.data";
 import { SideMenuComponent } from "../components/side-menu.component";
+import { Header } from "../components/header.component";
 
 test.describe("Dashboard page tests", () => {
   let loginPage: LoginPage;
   let homePage: HomePage;
   let dashboardPage: DashboardPage;
   let sideMenu: SideMenuComponent;
+  let header: Header
 
   test.beforeEach(async ({ page }) => {
     loginPage = new LoginPage(page);
@@ -17,10 +19,11 @@ test.describe("Dashboard page tests", () => {
     dashboardPage = new DashboardPage(page);
     const loginData: LoginData = loginPage.getLoginData();
     sideMenu = new SideMenuComponent(page);
+    header = new Header(page);
 
     await page.goto("/");
     await homePage.cookiesAcceptButton.click();
-    await homePage.loginButton.click();
+    await header.loginButton.click();
     await loginPage.login(loginData);
     await loginPage.administratorPanel.click();
   });
@@ -34,4 +37,10 @@ test.describe("Dashboard page tests", () => {
     sideMenu.newsletterButton.isVisible;
     dashboardPage.dashboardTitle.isVisible;
   });
+  test("Checking visibility of diagrams", async ({ page }) => {
+    // Arrange
+    // Act
+    // Assert
+  });
+
 });

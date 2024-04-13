@@ -1,11 +1,14 @@
 import { test, expect } from "@playwright/test";
 import { HomePage } from "../pages/home.page";
+import { Header } from "../components/header.component";
 
 test.describe("Home Page tests", () => {
   let homePage: HomePage;
+  let header: Header;
 
   test.beforeEach(async ({ page }) => {
     homePage = new HomePage(page);
+    header = new Header(page);
     await page.goto("/");
     await homePage.cookiesAcceptButton.click();
   });
@@ -16,6 +19,6 @@ test.describe("Home Page tests", () => {
     // Act
 
     // Assert
-    await expect(homePage.loginButton).toBeVisible;
+    await expect(header.loginButton).toBeVisible;
   });
 });

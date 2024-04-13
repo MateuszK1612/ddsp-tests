@@ -2,18 +2,21 @@ import test, { expect } from "playwright/test";
 import { LoginPage } from "../pages/login.page";
 import { HomePage } from "../pages/home.page";
 import { LoginData } from "../test-data/login.data";
+import { Header } from "../components/header.component";
 
 test.describe("Login page tests", () => {
   let loginPage: LoginPage;
   let homePage: HomePage;
+  let header: Header;
 
   test.beforeEach(async ({ page }) => {
     loginPage = new LoginPage(page);
     homePage = new HomePage(page);
+    header = new Header(page);
 
     await page.goto("/");
     await homePage.cookiesAcceptButton.click();
-    await homePage.loginButton.click();
+    await header.loginButton.click();
   });
 
   test("Succesful login", async ({ page }) => {
@@ -34,7 +37,7 @@ test.describe("Login page tests", () => {
     await loginPage.login(loginData);
 
     // Assert
-    await expect(homePage.loginButton).toHaveText("Login");
+    await expect(header.loginButton).toHaveText("Login");
   });
 
   test("Uncuccesful login with too short password", async ({ page }) => {
@@ -57,6 +60,6 @@ test.describe("Login page tests", () => {
     await loginPage.login(loginData);
 
     // Assert
-    await expect(homePage.loginButton).toHaveText("Login");
+    await expect(header.loginButton).toHaveText("Login");
   });
 });

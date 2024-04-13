@@ -4,6 +4,5 @@ export class HomePage {
   constructor(private page: Page) {}
 
   cookiesAcceptButton = this.page.locator("#privacy-policy-approve-btn");
-  loginButton = this.page.locator("#login-btn");
-  registerButton = this.page.locator("#register-btn");
+ 
 }
