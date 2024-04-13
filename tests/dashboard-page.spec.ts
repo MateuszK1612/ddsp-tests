@@ -25,7 +25,7 @@ test.describe("Dashboard page tests", () => {
     await homePage.cookiesAcceptButton.click();
     await header.loginButton.click();
     await loginPage.login(loginData);
-    await loginPage.administratorPanel.click();
+    await header.administratorPanel.click();
   });
 
   test("User can see side menu and dashboard", async ({ page }) => {
