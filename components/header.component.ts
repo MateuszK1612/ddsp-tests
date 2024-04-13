@@ -9,4 +9,7 @@ export class Header {
   administratorPanel = this.page.getByRole("link", {
     name: "Administrator panel",
   });
+  userMenu = this.page.locator("#user-logged-menu")
+  userMenuEditProfile = this.page.getByRole('link', { name: 'Edit profile' })
+
 }
