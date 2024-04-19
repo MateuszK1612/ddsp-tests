@@ -50,4 +50,61 @@ test.describe("Edit profile page tests", () => {
     await expect(editProfile.firstName).not.toBe(firstName);
     await expect(editProfile.firstName).toHaveValue(newFirstName);
   });
+  test("User can edit lastname", async ({ page }) => {
+    // Arrange
+    let lastName = await editProfile.lastName.textContent();
+    let newLastName = await faker.person.lastName();
+
+    // Act
+    await editProfile.lastName.clear();
+    await editProfile.lastName.fill(newLastName);
+    await editProfile.saveButton.click();
+
+    // Assert
+
+    await expect(editProfile.lastName).not.toBe(lastName);
+    await expect(editProfile.lastName).toHaveValue(newLastName);
+  });
+  test("User can edit phone number", async ({ page }) => {
+    // Arrange
+    let phoneNumber = await editProfile.phoneNumber.textContent();
+    let newPhoneNumber = await faker.string.numeric({ length: 9 });
+    // Act
+    await editProfile.phoneNumber.clear();
+    await editProfile.phoneNumber.fill(newPhoneNumber);
+    await editProfile.saveButton.click();
+    // Assert
+    await expect(editProfile.phoneNumber).not.toBe(phoneNumber);
+    await expect(editProfile.phoneNumber).toHaveValue(newPhoneNumber);
+  });
+
+  // test("", async ({ page }) => {
+  //   // Arrange
+  //   const isTrue = await editProfile.isSubscribed();
+  //   // Act
+  //   await page.waitForTimeout(2000);
+
+  //   let dupa = await editProfile.firstName.inputValue();
+  //   if (isTrue === true) {
+  //     await editProfile.subscribeCheckBox.click();
+  //     await editProfile.saveButton.click();
+  //     await expect(editProfile.subscribeCheckBox).toBeChecked({
+  //       checked: false
+  //     })
+  //   }
+  //   if (isTrue === false) {
+  //     let dupa = editProfile.subscribeCheckBox;
+  //     await editProfile.subscribeCheckBox.click();
+  //     let dupa2 = editProfile.saveButton;
+  //     await editProfile.saveButton.click();
+  //     await expect(editProfile.subscribeCheckBox).toBeChecked({
+  //       checked: true
+  //     })
+
+  //   }
+
+  //   // Assert
+
+
+  // });
 });
