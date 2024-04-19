@@ -4,6 +4,7 @@ import { EditProfile } from "../pages/editprofile.page";
 import { Header } from "../components/header.component";
 import { LoginPage } from "../pages/login.page";
 import { LoginData } from "../test-data/login.data";
+import { faker } from "@faker-js/faker";
 
 test.describe("Edit profile page tests", () => {
   let homePage: HomePage;
@@ -33,5 +34,20 @@ test.describe("Edit profile page tests", () => {
     await expect(editProfile.lastName).toBeVisible;
     await expect(editProfile.phoneNumber).toBeVisible;
     await expect(editProfile.saveButton).toBeVisible;
+  });
+  test("User can edit firstname", async ({ page }) => {
+    // Arrange
+    let firstName = await editProfile.firstName.textContent();
+    let newFirstName = await faker.person.firstName();
+
+    // Act
+    await editProfile.firstName.clear();
+    await editProfile.firstName.fill(newFirstName);
+    await editProfile.saveButton.click();
+
+    // Assert
+
+    await expect(editProfile.firstName).not.toBe(firstName);
+    await expect(editProfile.firstName).toHaveValue(newFirstName);
   });
 });
