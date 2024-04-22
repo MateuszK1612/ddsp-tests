@@ -78,33 +78,28 @@ test.describe("Edit profile page tests", () => {
     await expect(editProfile.phoneNumber).toHaveValue(newPhoneNumber);
   });
 
-  // test("", async ({ page }) => {
-  //   // Arrange
-  //   const isTrue = await editProfile.isSubscribed();
-  //   // Act
-  //   await page.waitForTimeout(2000);
+  test("Newsletter checkbox", async ({ page }) => {
+    // Arrange
+    const isSubscribed = await editProfile.isSubscribed();
+    await page.waitForTimeout(2000);
 
-  //   let dupa = await editProfile.firstName.inputValue();
-  //   if (isTrue === true) {
-  //     await editProfile.subscribeCheckBox.click();
-  //     await editProfile.saveButton.click();
-  //     await expect(editProfile.subscribeCheckBox).toBeChecked({
-  //       checked: false
-  //     })
-  //   }
-  //   if (isTrue === false) {
-  //     let dupa = editProfile.subscribeCheckBox;
-  //     await editProfile.subscribeCheckBox.click();
-  //     let dupa2 = editProfile.saveButton;
-  //     await editProfile.saveButton.click();
-  //     await expect(editProfile.subscribeCheckBox).toBeChecked({
-  //       checked: true
-  //     })
-
-  //   }
-
-  //   // Assert
-
-
-  // });
+    if (isSubscribed === true) {
+      // Act
+      await editProfile.subscribeCheckBox.click();
+      await editProfile.saveButton.click();
+      // Assert
+      await expect(editProfile.subscribeCheckBox2).toBeChecked({
+        checked: false,
+      });
+    }
+    if (isSubscribed === false) {
+      // Act
+      await editProfile.subscribeCheckBox.click();
+      await editProfile.saveButton.click();
+      // Assert
+      await expect(editProfile.subscribeCheckBox2).toBeChecked({
+        checked: true,
+      });
+    }
+  });
 });
