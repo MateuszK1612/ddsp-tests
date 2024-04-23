@@ -100,6 +100,10 @@ test.describe("Edit profile page tests", () => {
       await expect(editProfile.subscribeCheckBox2).toBeChecked({
         checked: true,
       });
+
+
+
+      
     }
   });
 });
