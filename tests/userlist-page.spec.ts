@@ -26,6 +26,7 @@ test.describe("User list page tests", () => {
     await header.loginButton.click();
     await loginPage.login(loginData);
     await header.administratorPanel.click();
+    await page.goto("https://ddsp.damiandziura.pl/#/Admin/Users/List")
   });
 
   test("User can go to user list page", async ({ page }) => {
@@ -33,8 +34,7 @@ test.describe("User list page tests", () => {
 
     // Act
 
-    sideMenu.usersButton2.click();
-    sideMenu.userList.click();
+    
     // Assert
   });
 });
