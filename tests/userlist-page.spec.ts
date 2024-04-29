@@ -36,7 +36,8 @@ test.describe("User list page tests", () => {
     // Arrange
 
     // Act
-    userListColumns.firstName.click();
+    await userListColumns.firstName.click();
     // Assert
+    
   });
 });
